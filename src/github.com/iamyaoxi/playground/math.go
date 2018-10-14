@@ -27,6 +27,7 @@ func Fibonacci() func() int {
 	}
 }
 
+//Experiment how to print Pascal Triangle
 func PascalTriangle() func() []int {
 	//Pascal Triangle based on the sum of the previous line
 	var previousLine []int

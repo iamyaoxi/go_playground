@@ -2,9 +2,9 @@ package playground
 
 import "testing"
 
-func Test(t *testing.T) {
+//Unit Test for Fibonacci function
+func TestFibonacci(t *testing.T) {
 
-	//Unit Test for Fibonacci function
 	//Expected value is set
 	expectedFibo := [11]int{0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55}
 	actualFibo := make([]int, 11)
@@ -21,8 +21,11 @@ func Test(t *testing.T) {
 			t.Errorf("FIBONACCI FAILED -> Expected: %v, Actual: %v", expectedFibo[i], actualFibo[i])
 		}
 	}
+}
 
-	//Unit Test for Pascal Triangle Function
+//Unit Test for Pascal Triangle Function
+func TestPascal(t *testing.T) {
+	
 	//Expected value
 	expectedPascal := [][]int {
 		[]int{1},
