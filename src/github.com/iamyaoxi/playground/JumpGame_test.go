@@ -1,6 +1,9 @@
 package playground
 
 import "testing"
+import "fmt"
+import "time"
+import "math/rand"
 
 /** Test case:
  * [0] => true
@@ -63,4 +66,13 @@ func TestJump(t *testing.T) {
 	if result {
 		t.Errorf("Should be false")
 	}
+
+	testAdvancedArray := make([]int, 1000)
+	for i:=1; i<=1000; i++ {
+		s1 := rand.NewSource(time.Now().UnixNano())
+		randNumber := rand.New(s1).Intn(8)
+		testAdvancedArray[i-1] = randNumber
+	}
+	result = Jump(testAdvancedArray)
+	fmt.Println("[1 ... 50] ", result)
 }

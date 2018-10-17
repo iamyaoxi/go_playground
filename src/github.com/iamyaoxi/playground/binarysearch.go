@@ -1,7 +1,7 @@
 package playground
 
 //Binary steps that returns the 
-func SimpleSearch(maxRange int) func(bool) int {
+func SimpleBinarySearch(maxRange int) func(bool) int {
 
 	//We define minimum and maximum value
 	minValue := 0

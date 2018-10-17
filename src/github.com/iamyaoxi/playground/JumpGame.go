@@ -15,50 +15,29 @@ package playground
  * Output: false
  * Explanation: You will always arrive at index 3 no matter what. Its maximum jump length is 0, which makes it impossible to reach the last index.
  */
-func jumpImpl(testArray []int, maxJump, currentIndex int) bool {
-	target := len(testArray)
-	reachTarget := false
-	
-	for i := 1; i <= maxJump; i++ {
-		idx := currentIndex + i
-		
-		if idx >= target-1 {
-			return true
-		}
-
-		nextJump := testArray[idx]
-		if nextJump+idx >= target {
-			return true
-		}
-
-		if nextJump == 0 {
-			
-			continue
-		}
-
-		//Keep looping until you find true or you don't have anything left
-		reachTarget = jumpImpl(testArray, nextJump, idx)
-
-		if reachTarget {
-			return true
-		}
-	}
-
-	//I guess you don't have anything left, so return false
-	return reachTarget
-}
-
 func Jump(testArray []int) bool {
 
 	//If only one element, return true
-	if len(testArray) == 1 {
+	if len(testArray) <= 1 {
 		return true
 	}
 
-	//What's the maximum jump
-	maxFirstJump := testArray[0]
+	maxJump := testArray[0]
 
-	//Return false since every possiblity can't go to last jump
-	//fmt.Println("Start to Jump until ", maxFirstJump)
-    return jumpImpl(testArray, maxFirstJump, 0)
+	for i:= 0; i<len(testArray); i++ {
+		maxTemp := testArray[i]+i
+		if maxJump <= i && testArray[i] == 0 {
+			return false
+		}
+
+		if maxJump < maxTemp {
+			maxJump = maxTemp
+		}
+
+		if maxJump >= len(testArray)-1 {
+			return true
+		}
+	}
+
+	return false
 }

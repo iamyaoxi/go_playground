@@ -3,6 +3,7 @@ package playground
 import (
 	"testing"
 	"math/rand"
+	"math"
 	"time"
 )
 
@@ -14,7 +15,7 @@ func TestSimpleBinarySearch(t *testing.T) {
 	s1 := rand.NewSource(time.Now().UnixNano())
 	randomNumber := rand.New(s1).Intn(maxField)
 
-	simple := SimpleSearch(maxField)
+	simple := SimpleBinarySearch(maxField)
 	//starts with true
 	smaller := true
 	stepsTaken := 0
@@ -32,9 +33,8 @@ func TestSimpleBinarySearch(t *testing.T) {
 		smaller = randomNumber < theGuess
 		theGuess = simple(smaller)
 
-		//It shouldn't take more than 40 steps
-		//At most it's only 39 Steps
-		if (stepsTaken > 40) {
+		//It shouldn't take more than Log2(maxField)
+		if stepsTaken > int(math.Log2(maxField)) {
 			t.Errorf("Too much steps taken")
 		}
 	}
