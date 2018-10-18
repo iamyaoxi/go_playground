@@ -25,3 +25,26 @@ func TestFanIn(t *testing.T) {
 	}
 	fmt.Println("Thanks Annie and Joe")
 }
+
+
+func TestFanInOrdered(t *testing.T) {
+	//Generates 2 channels from SimpleConversation
+	josh := OrderedConversation("Josh")
+	celine := OrderedConversation("Celine")
+
+	chResult := FanInOrdered(josh, celine)
+
+	//Here, the fanIn will return both Josh and Celine in sequence
+	//And there will be 10 messages from each side
+	for i:=0; i <= 10; i++ {
+		fromJosh := <- chResult
+		fmt.Println(fromJosh.message)
+
+		fromCeline := <- chResult
+		fmt.Println(fromCeline.message)
+
+		fromJosh.wait <- true
+		fromCeline.wait <- true
+	}
+	fmt.Println("Thanks Josh and Celine")
+}

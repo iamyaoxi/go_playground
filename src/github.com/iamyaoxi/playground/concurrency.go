@@ -53,3 +53,52 @@ func FanIn(ch1, ch2 <- chan string) <- chan string {
 	//Return fanIn channel
 	return fanIn
 }
+
+type OrderedMessage struct {
+	message string 
+	wait chan bool
+}
+
+func OrderedConversation(character string) <- chan OrderedMessage {
+	ch := make(chan OrderedMessage)
+	waitForIt := make(chan bool)
+
+	go func() {
+
+		for i:= 0; ; i++ {
+			ch <- OrderedMessage{fmt.Sprintf("%v says: %v", character, i), waitForIt}
+			time.Sleep(time.Duration(time.Second))
+
+			<- waitForIt //Here's the difference
+			//If it's false then the channel will be block
+		}
+	}()
+
+	return ch
+}
+
+//FanIn follows Multiplexing pattern. 
+//It will combine 2 channels into one channel
+//This one, we will make sure all messages are ordered
+func FanInOrdered(ch1, ch2 <- chan OrderedMessage) <- chan OrderedMessage {
+	//First we make channel that holds other channel
+	fanIn := make(chan OrderedMessage)
+
+	//Then here we execute goroutine function
+	go func() { 
+		//This line here means 
+		//Keep receiving and sending any value from the channel 1 to the fanIn channel
+		for {
+			fanIn <- <-ch1
+			}
+	}()
+	go func() { 
+		//Keep receiving and sending any value from the channel 2 to the fanIn channel
+		for {
+			fanIn <- <- ch2
+			}
+	}()
+
+	//Return fanIn channel
+	return fanIn
+}
