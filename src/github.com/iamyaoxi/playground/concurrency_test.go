@@ -48,3 +48,14 @@ func TestFanInOrdered(t *testing.T) {
 	}
 	fmt.Println("Thanks Josh and Celine")
 }
+
+func TestSelects(t *testing.T) {
+	joe := SimpleConversation("Joe")
+	edd := SimpleConversation("Edd")
+	moderator := SimpleConversation("Moderator")
+
+	chResult := FanInSelect(joe, edd, moderator)
+	for i:=0; i <= 10; i++ {
+		fmt.Println(<- chResult)
+	}
+}

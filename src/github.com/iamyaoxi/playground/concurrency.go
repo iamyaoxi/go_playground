@@ -59,6 +59,8 @@ type OrderedMessage struct {
 	wait chan bool
 }
 
+//Similar like Conversation generator, but this time
+//Making sure the conversation happen according to order
 func OrderedConversation(character string) <- chan OrderedMessage {
 	ch := make(chan OrderedMessage)
 	waitForIt := make(chan bool)
@@ -101,4 +103,26 @@ func FanInOrdered(ch1, ch2 <- chan OrderedMessage) <- chan OrderedMessage {
 
 	//Return fanIn channel
 	return fanIn
+}
+
+//FanInSelect follows Multiplexing pattern, but using select features from Go
+//It will combine 3 channels into one channel, but sending it into 2 channels
+func FanInSelect(ch1, ch2, ch3 <- chan string) chan string {
+	chReturn := make(chan string)
+	go func() {
+		//Keep iterating to process the channel
+		for {
+			//Distribute channels accordingly
+			select {
+			case v1 := <- ch1:
+				chReturn <- v1
+			case v2 := <- ch2:
+				chReturn <- v2
+			case v3 := <- ch3:
+				chReturn <- v3
+			}
+		}
+	}()
+	//Return the channel
+	return chReturn
 }
