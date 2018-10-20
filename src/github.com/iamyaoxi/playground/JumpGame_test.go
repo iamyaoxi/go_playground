@@ -1,7 +1,6 @@
 package playground
 
 import "testing"
-import "fmt"
 import "time"
 import "math/rand"
 
@@ -74,5 +73,4 @@ func TestJump(t *testing.T) {
 		testAdvancedArray[i-1] = randNumber
 	}
 	result = Jump(testAdvancedArray)
-	fmt.Println("[1 ... 50] ", result)
 }

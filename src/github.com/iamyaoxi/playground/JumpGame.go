@@ -22,22 +22,36 @@ func Jump(testArray []int) bool {
 		return true
 	}
 
+	//Rather than finding each jumps in each possibility
+	//We want to directly know maximum jump in each index
+	//Start at [0]
 	maxJump := testArray[0]
 
+	//Try to iterate each index
 	for i:= 0; i<len(testArray); i++ {
+		//See how far this index can go
 		maxTemp := testArray[i]+i
+		
+		//If we stuck in certain index, and no longer can go forward
+		//Return false
 		if maxJump <= i && testArray[i] == 0 {
 			return false
 		}
 
+		//Compare the maximum jump in the previous index
+		//With current one
 		if maxJump < maxTemp {
+			//Replace current is higher
 			maxJump = maxTemp
 		}
 
+		//If we can reach the last index
+		//Directly return true
 		if maxJump >= len(testArray)-1 {
 			return true
 		}
 	}
 
+	//Return false as default
 	return false
 }
