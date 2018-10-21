@@ -1,4 +1,4 @@
-package playground
+package puzzle
 
 import "testing"
 import "time"
